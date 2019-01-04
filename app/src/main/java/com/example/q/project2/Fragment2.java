@@ -52,7 +52,8 @@ public class Fragment2 extends Fragment {
 
     OneTimeData oneTimeData;
 
-    @Override
+    //필요 없음
+    /*@Override
     public void onAttach(Context context){
         super.onAttach(context);
         //might have to write later
@@ -86,7 +87,7 @@ public class Fragment2 extends Fragment {
                 // result of the request.
             }
         }
-    }
+    }*/
 
     public void passData (HashMap<String, String> data) {
         oneTimeData.oneTimeData(data);
