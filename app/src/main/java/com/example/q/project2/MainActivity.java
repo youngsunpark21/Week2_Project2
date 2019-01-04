@@ -36,9 +36,10 @@ public class MainActivity extends AppCompatActivity implements Fragment2.OneTime
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
                 Toast.makeText(MainActivity.this, "허용이 안되었습니다", Toast.LENGTH_SHORT).show();
-                finish();
+                //finish();
             }
         };
+
         TedPermission.with(this)
                 .setPermissionListener(permissionlistener)
                 .setDeniedMessage("허용이 필요합니다.")
