@@ -58,6 +58,32 @@ public class MainActivity extends AppCompatActivity implements Fragment2.OneTime
                         Manifest.permission.WRITE_CONTACTS)
                 .check();
 
+        //thread 만들기
+        Thread contactThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://socrip4.kaist.ac.kr:2080/api/getcontact");
+                    //url 바꾸기
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setDoInput(true);
+
+                    connection.setConnectTimeout(10000);
+                    connection.setReadTimeout(10000);
+                    InputStream inputStream = connection.getInputStream();
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    Log.d("TESTDATA", String.valueOf(connection.getResponseCode()));
+                    Log.d("TESTDATA",bufferedReader.readLine());
+                }
+                catch (Exception e) {
+                    Log.d("TESTDATA", e.getMessage());
+                }
+            }
+        };
+        contactThread.start();
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
@@ -84,32 +110,6 @@ public class MainActivity extends AppCompatActivity implements Fragment2.OneTime
             }
         });
 
-
-        //thread 만들기
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://socrip4.kaist.ac.kr:1080/api/users/all");
-                    //url 바꾸기
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    //connection.setRequestProperty("utf-8","/api/getcontact");
-
-//                    connection.setConnectTimeout(10000);
-//                    connection.setReadTimeout(10000);
-//                    InputStream inputStream = connection.getInputStream();
-//                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-//                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    Log.d("BACKDATA", String.valueOf(connection.getResponseCode()));
-                 //   Log.d("BACKDATA",bufferedReader.readLine());
-                }
-                catch (Exception e) {
-                    Log.d("BACKDATA", e.getMessage());
-                }
-            }
-        };
-        thread.start();
     }
 
     @Override

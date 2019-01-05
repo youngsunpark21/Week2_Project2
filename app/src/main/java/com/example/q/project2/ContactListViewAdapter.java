@@ -67,4 +67,8 @@ public class ContactListViewAdapter extends BaseAdapter {
 
         itemList.add(newItem);
     }
+
+    public ArrayList<ContactItem> getAll() {
+        return itemList;
+    }
 }
