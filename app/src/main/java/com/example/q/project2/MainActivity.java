@@ -6,11 +6,19 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -75,6 +83,33 @@ public class MainActivity extends AppCompatActivity implements Fragment2.OneTime
 
             }
         });
+
+
+        //thread 만들기
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://socrip4.kaist.ac.kr:1080/api/users/all");
+                    //url 바꾸기
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    //connection.setRequestProperty("utf-8","/api/getcontact");
+
+//                    connection.setConnectTimeout(10000);
+//                    connection.setReadTimeout(10000);
+//                    InputStream inputStream = connection.getInputStream();
+//                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+//                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    Log.d("BACKDATA", String.valueOf(connection.getResponseCode()));
+                 //   Log.d("BACKDATA",bufferedReader.readLine());
+                }
+                catch (Exception e) {
+                    Log.d("BACKDATA", e.getMessage());
+                }
+            }
+        };
+        thread.start();
     }
 
     @Override
@@ -84,4 +119,5 @@ public class MainActivity extends AppCompatActivity implements Fragment2.OneTime
         intent.putExtra("name", a.get("name"));
         startActivity(intent);
     }
+
 }
