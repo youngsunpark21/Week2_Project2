@@ -3,7 +3,12 @@ package com.example.q.project2;
 import java.util.Comparator;
 import java.util.HashMap;
 
-public class MapComparator implements Comparator<HashMap<String,String>> {
+/**
+ * Compares the maps in ascending order
+ */
+
+public class MapComparator  implements Comparator<HashMap<String, String>> {
+
     private final String key;
     private final String order;
 

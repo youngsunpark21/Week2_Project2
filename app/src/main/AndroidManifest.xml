@@ -24,9 +24,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".AlbumActivity"
-            android:configChanges="orientation|screenSize"/>
-
         <activity android:name=".GalleryPreview"
             android:configChanges="orientation|screenSize"/>
 

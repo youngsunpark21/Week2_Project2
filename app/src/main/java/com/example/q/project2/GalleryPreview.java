@@ -1,6 +1,7 @@
 package com.example.q.project2;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 
 public class GalleryPreview extends AppCompatActivity {
+
     ImageView GalleryPreviewing;
     String path;
 

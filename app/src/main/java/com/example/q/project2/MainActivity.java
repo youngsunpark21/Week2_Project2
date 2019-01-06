@@ -6,25 +6,16 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements Fragment2.OneTimeData {
 
-    HashMap<String, String> currentAlbumName = null;
+    String currentPath = null;
 
     //Permission
     Permission permission;
@@ -86,12 +77,12 @@ public class MainActivity extends AppCompatActivity implements Fragment2.OneTime
 
     }
 
+
     @Override
-    public void oneTimeData(HashMap<String, String> a) {
-        currentAlbumName = a;
-        Intent intent = new Intent(MainActivity.this, AlbumActivity.class);
-        intent.putExtra("name", a.get("name"));
+    public void oneTimeData(String a) {
+        currentPath = a;
+        Intent intent = new Intent(MainActivity.this, GalleryPreview.class);
+        intent.putExtra("name", a);
         startActivity(intent);
     }
-
 }

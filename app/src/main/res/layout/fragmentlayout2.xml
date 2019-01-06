@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pictureLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="0dp">
 
-    <GridView
-        android:id="@+id/gridview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="5dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:numColumns="auto_fit"
-        android:columnWidth="172dp"
-        android:horizontalSpacing="5dp"
-        android:verticalSpacing="5dp"
-        android:gravity="center"
-        android:stretchMode="columnWidth"
-        android:background="#ffffff">
-    </GridView>
 
-</LinearLayout>
+<GridView
+    android:id="@+id/galleryGridView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:gravity="start"
+    android:horizontalSpacing="5dp"
+    android:numColumns="3"
+    android:paddingLeft="5dp"
+    android:paddingTop="5dp"
+    android:paddingRight="5dp"
+    android:stretchMode="columnWidth"
+    android:verticalSpacing="5dp"></GridView>
+
+    <io.github.yavski.fabspeeddial.FabSpeedDial
+        android:id="@+id/frag2_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:fabGravity="bottom_end"
+        app:fabMenu="@menu/other_menu"
+        app:miniFabBackgroundTint="@android:color/white"
+        app:miniFabDrawableTint="?attr/colorPrimaryDark"
+        app:miniFabTitleTextColor="?attr/colorPrimaryDark" />
+
+
+</FrameLayout>
