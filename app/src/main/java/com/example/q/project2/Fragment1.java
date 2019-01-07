@@ -133,7 +133,6 @@ public class Fragment1 extends Fragment {
                                     ContactsContract.CommonDataKinds.Phone.PHOTO_URI,
                                     ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                                     ContactsContract.CommonDataKinds.Phone.DATA
-
                             };
 
                             Cursor c = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, proj, null, null
@@ -250,7 +249,6 @@ public class Fragment1 extends Fragment {
                                 public void run() {
                                     try {
                                         URL url = new URL("http://socrip4.kaist.ac.kr:2080/contact/backup/get");
-                                        //url 바꾸기
                                         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                                         connection.setRequestMethod("GET");
                                         connection.setDoInput(true);
