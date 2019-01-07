@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/action_backup2"
+        android:icon="@drawable/ic_backup"
+        android:title="백업"
+        />
+
+    <item
+        android:id="@+id/action_delete2"
+        android:icon="@drawable/ic_bin"
+        android:title="전체 삭제"
+        />
+
+    <item
+        android:id="@+id/action_sync2"
+        android:icon="@drawable/ic_synch"
+        android:title="동기화"
+        />
+
 </menu>

@@ -11,14 +11,17 @@ import android.database.MergeCursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.internal.NavigationMenu;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,6 +33,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -37,6 +44,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+
+import io.github.yavski.fabspeeddial.FabSpeedDial;
+import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 
 public class Fragment2 extends Fragment {
     static final int REQUEST_PERMISSION_KEY = 5245;
@@ -83,6 +93,71 @@ public class Fragment2 extends Fragment {
 
         loadAlbumTask = new LoadAlbumImages();
         loadAlbumTask.execute();
+
+        FabSpeedDial fab = (FabSpeedDial) view.findViewById(R.id.frag2_fab);
+        fab.setMenuListener(new SimpleMenuListenerAdapter() {
+            @Override
+            public boolean onPrepareMenu(NavigationMenu navigationMenu) {
+                return true;
+            }
+            @Override
+            public boolean onMenuItemSelected(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_backup2:
+                        //1번 백업하기
+                        //1-1 Bas64로 encoding 하기
+                        //1-2 json 되기
+                        final JSONArray outputList = new JSONArray();
+                        String path = null;
+                        String timestamp = null;
+
+                        Uri uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                        Uri uriInternal = MediaStore.Images.Media.INTERNAL_CONTENT_URI;
+
+                        final String[] projection = {MediaStore.MediaColumns.DATA,
+                                MediaStore.MediaColumns.DATE_MODIFIED};
+
+                        Cursor cursorExternal = getActivity().getContentResolver().query(uriExternal, projection, null, null, null);
+                        Cursor cursorInternal = getActivity().getContentResolver().query(uriInternal, projection, null, null, null);
+                        Cursor cursor = new MergeCursor(new Cursor[]{cursorExternal,cursorInternal});
+
+                        while (cursor.moveToNext()) {
+                            try {
+                            JSONObject outputObject = new JSONObject();
+                            path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));
+
+                            Log.d("encodewhat", path);
+
+                            timestamp = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_MODIFIED));
+                            outputObject.put("timestamp", Function.convertToTime(timestamp));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        cursor.close();
+
+                        //1-3 데이터 베이스 다 지우기
+                        //1-4 보내주기
+                        Toast.makeText(getContext(), "백업 되었습니다", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_delete2:
+                        Toast.makeText(getContext(), "전체삭제 되었습니다", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_sync2:
+                        Toast.makeText(getContext(), "동기화 되었습니다", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                //Toast.makeText(getContext(), ""+menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            @Override
+            public void onMenuClosed() {
+
+            }
+        });
 
         return view;
     }
