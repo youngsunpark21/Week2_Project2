@@ -62,6 +62,9 @@ public class Function {
 
     public static String convertToTime(String timestamp)
     {
+        if (timestamp == null) {
+            return null;
+        }
         long datetime = Long.parseLong(timestamp);
         Date date = new Date(datetime);
         DateFormat formatter = new SimpleDateFormat("dd/MM HH:mm");

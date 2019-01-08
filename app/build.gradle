@@ -43,5 +43,8 @@ dependencies {
     //Custom Library
     implementation 'io.github.yavski:fab-speed-dial:1.0.6'
 
+    //사진 volley
+    implementation 'com.android.volley:volley:1.1.1'
+
     implementation 'com.facebook.android:facebook-android-sdk:4.+'
 }

@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -35,6 +36,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
@@ -48,10 +55,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -172,8 +181,18 @@ public class Fragment2 extends Fragment {
                             try {
                             final JSONObject outputObject = new JSONObject();
                             path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));
+                            Log.d("papapaapapa", path);
 
-                            InputStream inputStream = new FileInputStream(path);
+////-------------------------------------------------
+                                Bitmap image;
+                                image = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(path),50,50,true);
+
+                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                image.compress(Bitmap.CompressFormat.JPEG,100,baos);
+                                byte[] imageBytes = baos.toByteArray();
+                                String imageString = Base64.encodeToString(imageBytes,Base64.DEFAULT);
+////----------------------------------------------------
+                            /*InputStream inputStream = new FileInputStream(path);
                                 byte[] bytes;
                                 byte[] buffer = new byte[8192];
                                 int bytesRead;
@@ -182,10 +201,10 @@ public class Fragment2 extends Fragment {
                                     output.write(buffer, 0, bytesRead);
                                 }
                                 bytes = output.toByteArray();
-                                final String encodedString = Base64.encodeToString(bytes, Base64.DEFAULT);
-                                outputObject.put("image", encodedString);
+                                final String encodedString = Base64.encodeToString(bytes, Base64.DEFAULT);*/
+                                outputObject.put("image", imageString);
 
-                            Log.d("encodewhatt", encodedString);
+                            Log.d("encodewhatt", imageString);
 
                             timestamp = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_MODIFIED));
                             outputObject.put("timestamp", Function.convertToTime(timestamp));
@@ -230,10 +249,6 @@ public class Fragment2 extends Fragment {
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -250,7 +265,76 @@ public class Fragment2 extends Fragment {
                         Toast.makeText(getContext(), "전체삭제 되었습니다", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_sync2:
-                        Thread requestNum = new Thread() {
+                        Log.d("dhquiwehquw", "dhqowdiqo");
+                        final String url = "http://socrip4.kaist.ac.kr:2080/gallery/backup/get";
+                        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    Log.d("eewewfkl", "entered!");
+                                    Log.d("oqoqoqoq", String.valueOf(response));
+                                    String responseString = response.getString("result");
+                                    Log.d("ppwpwp", responseString);
+                                    String[] stringAll = responseString.split("image:");
+                                    String part1 = stringAll[1];
+                                    String part2 = stringAll[2];
+                                    String[] strings1 = part1.split(",");
+                                    String[] strings2 = part2.split(",");
+                                    String part3 = strings1[0];
+                                    String part4 = strings2[0];
+                                    String[] lastpart1 = part3.split("'");
+                                    String[] lastpart2 = part4.split("'");
+                                    String last1 = lastpart1[1];
+                                    String last2 = lastpart2[1];
+                                    Log.d("deeqw", last1);
+                                    Log.d("qoweji", last2);
+
+                                    String test1 = "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\n";
+                                    String test2 = "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\naNGRnH//2Q==\n";
+
+                                    String[] last11 = test1.split("\\r?\\n+");
+                                    StringBuilder encodedSB1 = new StringBuilder();
+                                    for (String s: last11) {
+                                        encodedSB1.append(s);
+                                    }
+                                    String encodedString1 = encodedSB1.toString();
+                                    Log.d("qiwdhqjk", encodedString1);
+
+                                    String[] last22 = test2.split("\\r?\\n+");
+                                    StringBuilder encodedSB2 = new StringBuilder();
+                                    for (String s : last22) {
+                                        encodedSB2.append(s);
+                                    }
+                                    String encodedString2 = encodedSB2.toString();
+                                    Log.d("djqio", encodedString2);
+
+
+                                    byte[] decodedString1 = Base64.decode(encodedString1, Base64.DEFAULT);
+                                    Bitmap decodedImage1 = BitmapFactory.decodeByteArray(decodedString1, 0, decodedString1.length);
+
+                                    FileOutputStream out1 = new FileOutputStream("/storage/emulated/0/DCIM/Camera/");
+                                    decodedImage1.compress(Bitmap.CompressFormat.PNG, 100 , out1);
+
+                                    Toast.makeText(getContext(), "동기화 되었습니다", Toast.LENGTH_SHORT).show();
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("errorerror!", String.valueOf(error));
+                                Log.d("errorerror!", "애러가 났어용");
+                            }
+                        });
+                        requestQueue.add(jsonObjectRequest);
+
+                        /*Thread requestNum = new Thread() {
                             @Override
                             public void run(){
                                 try{
@@ -337,9 +421,9 @@ public class Fragment2 extends Fragment {
                                 e.printStackTrace();
                             }
                             numInt -=1;
-                        }
+                        }*/
 
-                        Toast.makeText(getContext(), "동기화 되었습니다", Toast.LENGTH_SHORT).show();
+
                         break;
                 }
                 //Toast.makeText(getContext(), ""+menuItem.getTitle(), Toast.LENGTH_SHORT).show();
@@ -386,7 +470,8 @@ public class Fragment2 extends Fragment {
                 path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));
                 timestamp = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_MODIFIED));
 
-                imageList.add(Function.mappingInbox(null, path, timestamp, Function.convertToTime(timestamp), null));
+                //imageList.add(Function.mappingInbox(null, path, timestamp, Function.convertToTime(timestamp), null));
+                imageList.add(Function.mappingInbox(null, path, timestamp, null, null));
             }
 
             cursor.close();
@@ -466,3 +551,4 @@ class SingleAlbumAdapter extends BaseAdapter {
 class SingleAlbumViewHolder {
     ImageView galleryImage;
 }
+
