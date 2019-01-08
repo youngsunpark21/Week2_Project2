@@ -5,24 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <!--android:background="@drawable/GrimPatron"-->
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="다  들"
+        android:text="다 들"
         android:textStyle="bold"
+        android:fontFamily="@font/BMDOHYEON_ttf"
         android:layout_gravity="center"
-        android:textSize="80sp"
+        android:textSize="90sp"
         android:textColor="#000000"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="모  여"
+        android:text="모 여"
         android:textStyle="bold"
+        android:fontFamily="@font/BMDOHYEON_ttf"
         android:layout_gravity="center"
-        android:textSize="80sp"
+        android:textSize="90sp"
         android:textColor="#000000"/>
 
     <Button
@@ -31,9 +35,20 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:text="다들 모여!!"
-        android:textSize="25sp"
+        android:text=">> 다들 모여!! <<"
+        android:background="#FFFFFF"
+        android:fontFamily="@font/BMDOHYEON_ttf"
+        android:textSize="20sp"
+        android:textColor="#000000"
         />
+
+    <!--<ImageButton-->
+        <!--android:id="@+id/btnMoyeo"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:src="@drawable/GrimPatron"-->
+        <!--/>-->
 
     <LinearLayout
         android:layout_width="wrap_content"
