@@ -28,6 +28,10 @@
         <activity android:name=".GalleryPreview"
             android:configChanges="orientation|screenSize"/>
 
+        <activity android:name=".MoyeoActivity">
+
+        </activity>
+
 
     </application>
 

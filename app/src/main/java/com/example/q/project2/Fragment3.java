@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -71,9 +73,21 @@ public class Fragment3 extends Fragment {
 
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-        if (!isLoggedIn) {
-            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-        }
+//        if (!isLoggedIn) {
+//            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+//        }
+
+        Button button = (Button) view.findViewById(R.id.btnMoyeo);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast toast = Toast.makeText(getContext(), "친구들아 모여라~~!!", Toast.LENGTH_SHORT);
+                toast.show();
+
+                Intent it = new Intent(getContext(), MoyeoActivity.class);
+                startActivity(it);
+            }
+        });
 
         return view;
     }
