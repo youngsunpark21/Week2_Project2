@@ -15,16 +15,17 @@
         />
 
     <ImageButton
-        android:onClick="btnRefresh"
+        android:id="@+id/refreshButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/refresh"
         android:layout_gravity="end"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
-        />
+        android:onClick="btnRefresh"
+        android:src="@drawable/refresh" />
 
     <GridView
+        android:id="@+id/moyeoList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numColumns="2">

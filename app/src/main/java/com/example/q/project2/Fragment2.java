@@ -3,7 +3,9 @@ package com.example.q.project2;
 import android.Manifest;
 import android.app.Activity;
 import android.app.usage.ExternalStorageStats;
+import android.content.ContentProviderOperation;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -313,14 +315,31 @@ public class Fragment2 extends Fragment {
                                     byte[] decodedString1 = Base64.decode(encodedString1, Base64.DEFAULT);
                                     Bitmap decodedImage1 = BitmapFactory.decodeByteArray(decodedString1, 0, decodedString1.length);
 
-                                    FileOutputStream out1 = new FileOutputStream("/storage/emulated/0/DCIM/Camera/");
-                                    decodedImage1.compress(Bitmap.CompressFormat.PNG, 100 , out1);
+                                    ArrayList<ContentProviderOperation> list = new ArrayList<ContentProviderOperation>();
+
+                                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                    decodedImage1.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+                                    list.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                                                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                                                    .withValue(ContactsContract.Data.IS_SUPER_PRIMARY, 1)
+                                                    .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)
+                                                    .withValue(ContactsContract.CommonDataKinds.Photo.PHOTO, stream.toByteArray())
+                                                    .build());
+
+
+
+//                                    ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
+//                                    File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+//                                    File mypath = new File(directory, "profile.jpg");
+//
+//                                    FileOutputStream out1 = new FileOutputStream("/storage/emulated/0/DCIM/Camera/sample.png");
+//                                    FileOutputStream out1 = new FileOutputStream(mypath);
+//                                    decodedImage1.compress(Bitmap.CompressFormat.PNG, 100 , out1);
+//                                    out1.close();
 
                                     Toast.makeText(getContext(), "동기화 되었습니다", Toast.LENGTH_SHORT).show();
 
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
-                                } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
 

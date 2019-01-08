@@ -24,6 +24,10 @@ import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 
 public class Fragment3 extends Fragment {
@@ -81,6 +85,29 @@ public class Fragment3 extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Thread callThread = new Thread() {
+                    @Override
+                    public void run(){
+                        try{
+                            URL url = null;
+                            url = new URL("http://socrip4.kaist.ac.kr:2080/moyeo/sendemail");
+                            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                            connection.setRequestMethod("POST");
+                            connection.setDoOutput(true);
+
+                            Log.d("sendInvitecall", String.valueOf(connection.getResponseCode()));
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (Exception e) {
+                            Log.d("sendInvite",e.getMessage());
+                        }
+                    }
+                };
+
+                callThread.start();
+
                 Toast toast = Toast.makeText(getContext(), "친구들아 모여라~~!!", Toast.LENGTH_SHORT);
                 toast.show();
 
