@@ -315,27 +315,10 @@ public class Fragment2 extends Fragment {
                                     byte[] decodedString1 = Base64.decode(encodedString1, Base64.DEFAULT);
                                     Bitmap decodedImage1 = BitmapFactory.decodeByteArray(decodedString1, 0, decodedString1.length);
 
-                                    ArrayList<ContentProviderOperation> list = new ArrayList<ContentProviderOperation>();
 
-                                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                                    decodedImage1.compress(Bitmap.CompressFormat.JPEG, 70, stream);
-                                    list.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-                                                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                                                    .withValue(ContactsContract.Data.IS_SUPER_PRIMARY, 1)
-                                                    .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)
-                                                    .withValue(ContactsContract.CommonDataKinds.Photo.PHOTO, stream.toByteArray())
-                                                    .build());
-
-
-
-//                                    ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
-//                                    File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-//                                    File mypath = new File(directory, "profile.jpg");
-//
-//                                    FileOutputStream out1 = new FileOutputStream("/storage/emulated/0/DCIM/Camera/sample.png");
-//                                    FileOutputStream out1 = new FileOutputStream(mypath);
-//                                    decodedImage1.compress(Bitmap.CompressFormat.PNG, 100 , out1);
-//                                    out1.close();
+                                    String imageSaveUri = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), decodedImage1, "사진 저장", "저장되었습니다");
+                                    Uri uri = Uri.parse(imageSaveUri);
+                                    getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
 
                                     Toast.makeText(getContext(), "동기화 되었습니다", Toast.LENGTH_SHORT).show();
 
@@ -455,6 +438,39 @@ public class Fragment2 extends Fragment {
         });
 
         return view;
+    }
+
+    /**
+     * Image SDCard Save (input Bitmap -> saved file JPEG)
+     * Writer intruder(Kwangseob Kim)
+     * @param bitmap : input bitmap file
+     * @param folder : input folder name
+     * @param name   : output file name
+     */
+    public static void saveBitmaptoJpeg(Bitmap bitmap,String folder, String name){
+        Log.d("dfqehuieywu", "here!!");
+        String ex_storage =Environment.getExternalStorageDirectory().getAbsolutePath();
+        // Get Absolute Path in External Sdcard
+        String foler_name = "/"+folder+"/";
+        String file_name = name+".jpg";
+        String string_path = ex_storage+foler_name;
+
+        File file_path;
+        try{
+            file_path = new File(string_path);
+            if(!file_path.isDirectory()){
+                file_path.mkdirs();
+            }
+            FileOutputStream out = new FileOutputStream(string_path+file_name);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.close();
+
+        }catch(FileNotFoundException exception){
+            Log.e("FileNotFoundException", exception.getMessage());
+        }catch(IOException exception){
+            Log.e("IOException", exception.getMessage());
+        }
     }
 
     class LoadAlbumImages extends AsyncTask<String, Void, String> {

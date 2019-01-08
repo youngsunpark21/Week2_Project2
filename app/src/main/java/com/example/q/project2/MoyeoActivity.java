@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +28,8 @@ import java.util.ArrayList;
 
 public class MoyeoActivity extends AppCompatActivity {
 
-    public ArrayList<MoyeoItem> nameList = new ArrayList<MoyeoItem>();
+//    public ArrayList<MoyeoItem> nameList = new ArrayList<MoyeoItem>();
+    public ArrayList<String> nameListExtra = new ArrayList<>();
 
     static MoyeoAdapter adapter;
 
@@ -35,20 +38,27 @@ public class MoyeoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moyeo);
 
+        ArrayList<String> al = new ArrayList<>();
         Intent intent = getIntent();
         ArrayList<String> newnames = intent.getStringArrayListExtra("names");
 
         if (newnames != null ){
             for (int i = 0; i < newnames.size(); i++) {
-                MoyeoItem newItem = new MoyeoItem(newnames.get(i));
-                nameList.add(newItem);
+//                MoyeoItem newItem = new MoyeoItem(newnames.get(i));
+//                nameList.add(newItem);
+                al.add(newnames.get(i));
             }
         }
 //
 //        Bundle names = getIntent().getExtras();
 //        Log.d("dqj", String.valueOf(names));
 
-        final GridView inviteView = (GridView) findViewById(R.id.moyeoList);
+//        final GridView inviteView = (GridView) findViewById(R.id.moyeoList);
+        ArrayAdapter<String> ad;
+        ad = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, al);
+
+        ListView list = findViewById(R.id.moyeoList);
+        list.setAdapter(ad);
 
         ImageButton refreshButt = findViewById(R.id.refreshButton);
         refreshButt.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +81,9 @@ public class MoyeoActivity extends AppCompatActivity {
                             for (int i = 0; i < replyArray.length(); i++) {
                                 JSONObject replyObject = (JSONObject) replyArray.get(i);
                                 String replyName = (String) replyObject.get("name");
-                                MoyeoItem item = new MoyeoItem(replyName);
-                                nameList.add(item);
+//                                MoyeoItem item = new MoyeoItem(replyName);
+//                                nameList.add(item);
+                                nameListExtra.add(replyName);
                                 Log.d("fqew", replyName);
                             }
 
@@ -82,7 +93,7 @@ public class MoyeoActivity extends AppCompatActivity {
 
                             finish();
                             Intent intent = new Intent(getBaseContext(), MoyeoActivity.class);
-                            intent.putExtra("names", nameList);
+                            intent.putExtra("names", nameListExtra);
                             startActivity(intent);
 
 //                            runOnUiThread(new Runnable() {
@@ -108,7 +119,7 @@ public class MoyeoActivity extends AppCompatActivity {
             }
         });
 
-        adapter = new MoyeoAdapter(this, R.layout.moyeo_item, nameList);
-        inviteView.setAdapter(adapter);
+//        adapter = new MoyeoAdapter(this, R.layout.moyeo_item, nameList);
+//        inviteView.setAdapter(adapter);
     }
 }

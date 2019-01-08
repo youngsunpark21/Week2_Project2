@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Project2</string>
     <string name="facebook_app_id">341082510045996</string>
+    <string name="moyeoTag"><![CDATA[>> 다들 모여!! <<]]></string>
 </resources>

@@ -14,7 +14,6 @@
         android:layout_marginTop="50dp"
         android:text="다 들"
         android:textStyle="bold"
-        android:fontFamily="@font/BMDOHYEON_ttf"
         android:layout_gravity="center"
         android:textSize="90sp"
         android:textColor="#000000"/>
@@ -24,7 +23,6 @@
         android:layout_height="wrap_content"
         android:text="모 여"
         android:textStyle="bold"
-        android:fontFamily="@font/BMDOHYEON_ttf"
         android:layout_gravity="center"
         android:textSize="90sp"
         android:textColor="#000000"/>
@@ -35,9 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:text=">> 다들 모여!! <<"
+        android:text="@string/moyeoTag"
         android:background="#FFFFFF"
-        android:fontFamily="@font/BMDOHYEON_ttf"
         android:textSize="20sp"
         android:textColor="#000000"
         />
