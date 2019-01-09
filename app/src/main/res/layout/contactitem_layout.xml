@@ -10,6 +10,7 @@
         android:id="@+id/profileImage"
         android:layout_width="80dp"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:layout_weight="1"
         tools:srcCompat="@tools:sample/avatars[0]" />
 
@@ -27,7 +28,8 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="이름"
-            android:textColor="#33aabb"
+            android:fontFamily="@font/bmdohyeon_ttf"
+            android:textColor="@color/mini_fab_drawable_tint"
             android:textStyle="bold" />
 
         <TextView
@@ -37,6 +39,7 @@
             android:layout_weight="40"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:fontFamily="@font/bmdohyeon_ttf"
             android:text="전화번호" />
     </LinearLayout>
 

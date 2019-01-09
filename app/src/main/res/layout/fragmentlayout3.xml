@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,36 +9,26 @@
     <!--android:background="@drawable/GrimPatron"-->
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="다 들"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:textSize="90sp"
-        android:textColor="#000000"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:text="다 들"-->
+        <!--android:fontFamily="@font/bmdohyeon_ttf"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:textSize="90sp"-->
+        <!--android:textColor="#000000"/>-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="모 여"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:textSize="90sp"
-        android:textColor="#000000"/>
-
-    <Button
-        android:id="@+id/btnMoyeo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="70dp"
-        android:text="@string/moyeoTag"
-        android:background="#FFFFFF"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="모 여"-->
+        <!--android:fontFamily="@font/bmdohyeon_ttf"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:textSize="90sp"-->
+        <!--android:textColor="#000000"/>-->
 
     <!--<ImageButton-->
         <!--android:id="@+id/btnMoyeo"-->
@@ -47,12 +38,30 @@
         <!--android:src="@drawable/GrimPatron"-->
         <!--/>-->
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/moyeo" />
+
+    <Button
+        android:id="@+id/btnMoyeo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:background="#FFFFFF"
+        android:fontFamily="@font/bmdohyeon_ttf"
+        android:text="다들 모여!!"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        >
+        android:layout_marginTop="30dp">
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button"

@@ -12,21 +12,25 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/cardview_dark_background">
+        android:fontFamily="@font/bmdohyeon_ttf"
+        app:tabIndicatorColor="@color/colorAccent">
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bmdohyeon_ttf"
             android:text="연락처" />
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bmdohyeon_ttf"
             android:text="사진첩" />
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bmdohyeon_ttf"
             android:text="모여라" />
     </android.support.design.widget.TabLayout>
 

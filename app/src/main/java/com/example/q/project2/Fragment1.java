@@ -87,7 +87,9 @@ public class Fragment1 extends Fragment {
 
             };
 
-            Uri uriBlank = Uri.parse("android.resource://com.example.q.myapplication/drawable/bob");
+            //Uri uriBlank = Uri.parse("android.resource://com.example.q.myapplication/drawable/bob");
+
+            Uri uriBlank = Uri.parse("android.resource://com.example.q.project2/drawable/avatar");
 
             Cursor c = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, proj, null, null
                     , ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + " asc");
